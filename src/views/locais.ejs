@@ -1,0 +1,28 @@
+<%- include("_header") -%>
+
+<h1>Últimos Negócios (Lçtos: #<%= model.length %>)</h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Ativo</th>
+        <th>Valor</th>
+        <th class="d-print-none"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const trade of model) { %>
+        <tr>
+          <td><%= trade.cd_ativo %></td>
+          <td><%= trade.vl_movimento %></td>
+           <td class="d-print-none">
+            <a class="confirmLink btn btn-sm btn-danger" id="btndel<%= trade.lcto %>" href="/tradedel/<%= trade.lcto %>">Apagar</button>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("_footer") -%>

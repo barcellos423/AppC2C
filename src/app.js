@@ -1,8 +1,26 @@
 import express from "express";
 
+import path from "path";
+
 const app = express();
 
 app.use(express.json())
+
+app.set("view engine", "ejs");
+
+import * as url from 'url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
+
+//app.set("views", "./src/views/livres.ejs");
+
+//app.set('views','./folder1/folder2/views');
+
+//app.use(express.static("public"));
+
+app.use(express.urlencoded({ extended: false }));
 
 import connection from '../src/db.js';
 
@@ -12,7 +30,10 @@ app.get('/c2c', (req, res) => {
     if (err) {
       return console.error(err.message);
     }
-    res.status(200).send(rows);
+    //res.status(200).send(rows);
+    res.render("locais", { model: rows });
+    //res.render("cardcustodia", { model: rows, message: global.portsearch });
+    //res.render(require.resolve('./src/views/livres.ejs'));
      });
 }) 
 
@@ -23,7 +44,8 @@ const livros = [
 ]
 
 app.get('/', (req, res) => {
-  res.status(200).send('Curso de Node');
+  res.render("index");
+  //res.status(200).send('Curso de Node');
 }) 
 
 app.get('/livros', (req, res) => {
